@@ -31,7 +31,7 @@
 /*!
  *  I2C ADDRESS/BITS/SETTINGS
  */
-#define BMP280_ADDRESS (0x77) /**< The default I2C address for the sensor. */
+#define BMP280_ADDRESS (0x76) /**< The default I2C address for the sensor. */
 #define BMP280_ADDRESS_ALT                                                     \
   (0x76)                     /**< Alternative I2C address for the sensor. */
 #define BMP280_CHIPID (0x58) /**< Default chip ID. */
@@ -190,6 +190,7 @@ public:
   uint8_t sensorID(void);
 
   float readTemperature();
+  float readTemperatureInF();
   float readPressure(void);
   float readAltitude(float seaLevelhPa = 1013.25);
   float seaLevelForAltitude(float altitude, float atmospheric);

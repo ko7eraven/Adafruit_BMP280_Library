@@ -269,6 +269,34 @@ float Adafruit_BMP280::readTemperature() {
   return T / 100;
 }
 
+*!
+ * Reads the temperature from the device.
+ * @return The temperature in degrees celsius.
+ */
+float Adafruit_BMP280::readTemperatureInF() {
+  int32_t var1, var2;
+  if (!_sensorID)
+    return NAN; // begin() not called yet
+
+  int32_t adc_T = read24(BMP280_REGISTER_TEMPDATA);
+  adc_T >>= 4;
+
+  var1 = ((((adc_T >> 3) - ((int32_t)_bmp280_calib.dig_T1 << 1))) *
+          ((int32_t)_bmp280_calib.dig_T2)) >>
+         11;
+
+  var2 = (((((adc_T >> 4) - ((int32_t)_bmp280_calib.dig_T1)) *
+            ((adc_T >> 4) - ((int32_t)_bmp280_calib.dig_T1))) >>
+           12) *
+          ((int32_t)_bmp280_calib.dig_T3)) >>
+         14;
+
+  t_fine = var1 + var2;
+
+  float T = (t_fine * 5 + 128) >> 8;
+  return T/100 * 9 /5 +32;
+}
+
 /*!
  * Reads the barometric pressure from the device.
  * @return Barometric pressure in Pa.
