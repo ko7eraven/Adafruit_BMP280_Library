@@ -269,7 +269,7 @@ float Adafruit_BMP280::readTemperature() {
   return T / 100;
 }
 
-*!
+/*!
  * Reads the temperature from the device.
  * @return The temperature in degrees celsius.
  */
